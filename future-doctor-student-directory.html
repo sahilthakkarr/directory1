@@ -38,14 +38,37 @@
  </style>
 </head>
 <body>
-  <script>
+ <script>
+  // Redirect if not logged in
   if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "index.html";  // Redirect to login if not logged in
+    window.location.href = "index.html";
   }
+
+  // Total session duration: 10 minutes
+  const sessionDuration = 10 * 60 * 1000;
+  const logoutTime = Date.now() + sessionDuration;
+  sessionStorage.setItem("logoutTime", logoutTime);
+
+  const timerElement = document.getElementById("session-timer");
+
+  const countdown = setInterval(() => {
+    const remaining = parseInt(sessionStorage.getItem("logoutTime")) - Date.now();
+
+    if (remaining <= 0) {
+      clearInterval(countdown);
+      localStorage.removeItem("loggedIn");
+      alert("Session expired. Logging out.");
+      window.location.href = "index.html"; // back to login
+    } else {
+      const minutes = Math.floor(remaining / (60 * 1000));
+      const seconds = Math.floor((remaining % (60 * 1000)) / 1000);
+      timerElement.textContent = `Session expires in ${minutes}m ${seconds < 10 ? '0' : ''}${seconds}s`;
+    }
+  }, 1000);
 </script>
 
   <h2>FDES STUDENT DIRECTORY</h2>
-
+<p id="session-timer" style="font-weight: bold; color: red;"></p>
   <div class="filters">
     <label for="genderFilter">Gender:</label>
     <select id="genderFilter">
