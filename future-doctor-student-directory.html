@@ -1,0 +1,4580 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Future Doctor Student Directory</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .filters { margin-bottom: 15px; }
+    .filters select { margin-right: 10px; padding: 5px; }
+    table td, table th { font-size: 14px; }
+  table.dataTable thead {
+    background-color: #6b3fa0;
+    color: white;
+  }
+  /* Adjust the search box position */
+.dataTables_filter {
+  text-align: center !important;
+  margin-right: 45%; /* adjust as needed for balance */
+  margin-bottom: 20px;
+}
+/* Move the 'Show entries' dropdown to bottom-right */
+.dataTables_length {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+}
+
+/* Ensure the DataTable wrapper has relative positioning */
+.dataTables_wrapper {
+  position: relative;
+  padding-bottom: 50px; /* reserve space for the moved dropdown */
+  margin-top: 50px;
+}
+
+ </style>
+</head>
+<body>
+  <script>
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html";  // Redirect to login if not logged in
+  }
+</script>
+
+  <h2>FDES STUDENT DIRECTORY</h2>
+
+  <div class="filters">
+    <label for="genderFilter">Gender:</label>
+    <select id="genderFilter">
+      <option value="">All</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+
+    <label for="cityFilter">CITY:</label>
+    <select id="cityFilter"></select>
+
+    <label for="universityFilter">UNIVERSITY:</label>
+    <select id="universityFilter"></select>
+
+    <label for="yearFilter">Year:</label>
+    <select id="yearFilter">
+      <option value="">All</option>
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+    </select>
+  </div>
+
+  <table id="studentsTable" class="display" width="100%">
+    <thead>
+      <tr>
+        <th>STUDENT NAME</th>
+        <th>GENDER</th>
+        <th>CITY</th>
+        <th>UNIVERSITY</th>
+        <th>JOINING YEAR</th>
+        <th>NUMBER 1</th>
+        <th>MOBILE NUMBER 2</th>
+        <th>EMAIL ADDRESS</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script>
+    const students = [
+      {
+        "Name": "Pushpak Kiran Patil",
+        "Gender": "Male",
+        "University": "Osh State University (IMF)",
+        "City": "Nashik",
+        "NUMBER 1": 9421516807,
+        "MOBILE NUMBER 2": 9552773116,
+        "PLACE OF ISSUE": "Mumbai",
+        "EMAIL ADDRESS": "patilpush21@gmail.com",
+        "Year": 2018
+      },
+ {
+   "STUDENT NAME": "Pradhyna Bapu Sant",
+   "GENDER": "Female",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 8788572939,
+   "MOBILE NUMBER 2": 8390817237,
+   "PLACE OF ISSUE": "Pune",
+   "EMAIL ADDRESS": "pradhynasant@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Snehal Sanjay Gaikhe",
+   "GENDER": "Female",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 8149507270,
+   "MOBILE NUMBER 2": 8856839796,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "snehalgaikhe@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Atharva Sunil Ghadwaje",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9881600326,
+   "MOBILE NUMBER 2": 9689431909,
+   "PLACE OF ISSUE": "Nashik",
+   "EMAIL ADDRESS": "sunilghadwaje@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Hardik Sudhakar Gupta",
+   "GENDER": "Male",
+   "UNIVERSITY": "Perm State Medical University",
+   "CITY": "Nashik",
+   "NUMBER 1": 9975095566,
+   "MOBILE NUMBER 2": 9822813947,
+   "PLACE OF ISSUE": "Nashik",
+   "EMAIL ADDRESS": "chetna12gupta@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Roshan Shankar Pawar",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9423925321,
+   "MOBILE NUMBER 2": 8087149110,
+   "PLACE OF ISSUE": "Nashik",
+   "EMAIL ADDRESS": "pawarroshan610@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Vinit Dhananjay Medge",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9527183349,
+   "MOBILE NUMBER 2": 9834366115,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "vinitmedge01@rediffmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Prajakta Chandrakant Aher",
+   "GENDER": "Female",
+   "UNIVERSITY": "Perm State Medical University",
+   "CITY": "Nashik",
+   "NUMBER 1": 9922999206,
+   "MOBILE NUMBER 2": 9922999260,
+   "PLACE OF ISSUE": "Nashik",
+   "EMAIL ADDRESS": "prajakta1899@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Mrunal Dattatray Mulay",
+   "GENDER": "Female",
+   "UNIVERSITY": "",
+   "CITY": "Nashik",
+   "NUMBER 1": 9552530917,
+   "MOBILE NUMBER 2": 8928099749,
+   "PLACE OF ISSUE": "Thane",
+   "EMAIL ADDRESS": "dattatraymulay16@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Shubham Ramesh Jagtap",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9421500067,
+   "MOBILE NUMBER 2": 9921182064,
+   "PLACE OF ISSUE": "Nashik",
+   "EMAIL ADDRESS": "sj7219052@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Palaash Pankaj Samdadiya",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9420890570,
+   "MOBILE NUMBER 2": 8793399293,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "palaashj9@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Unnati Yogesh Madhrele",
+   "GENDER": "Female",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9763387599,
+   "MOBILE NUMBER 2": 9552298997,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "unnatimadhrele@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Syed Mohammad Ali Shariq",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9850988241,
+   "MOBILE NUMBER 2": 9763170780,
+   "PLACE OF ISSUE": "Nashik",
+   "EMAIL ADDRESS": "alisayyed2000@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Omkar Sudharshan Pavase",
+   "GENDER": "Female",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9767108418,
+   "MOBILE NUMBER 2": 9168685793,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "omkarpavase@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Siddhi Hemant Khairnar",
+   "GENDER": "Female",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9011164414,
+   "MOBILE NUMBER 2": 7448118767,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "hemantkhairnar7668@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Kirti Chandrakant Rengade",
+   "GENDER": "Female",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 9766152443,
+   "MOBILE NUMBER 2": 9850627392,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "kirtirengade23@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Poonam Jalindar Musande",
+   "GENDER": "Female",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Pune",
+   "NUMBER 1": 9421003325,
+   "MOBILE NUMBER 2": 9284719320,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "imanoop01@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Rohit Raosaheb Dhanwate",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 9822979046,
+   "MOBILE NUMBER 2": 7066556272,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "dhanawaterohit2@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Shubham Bhaskar Bobade",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 7447513458,
+   "MOBILE NUMBER 2": 9923427270,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "meetshubham123@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Shubham Anil Desai",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 8551050867,
+   "MOBILE NUMBER 2": 8149806875,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "shubhamdesai310@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Mandar Rajendra Harishchandra",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 9922444796,
+   "MOBILE NUMBER 2": 8378947598,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "Mandyharish@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Gaurav Sanjay Oza",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 7020335607,
+   "MOBILE NUMBER 2": 8669007240,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "sanjayoza472@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Piyush Pramesh Malandkar",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Nashik",
+   "NUMBER 1": 8668760146,
+   "MOBILE NUMBER 2": 9260095899,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "malandkarpiyush@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Durgesh Ajay Mishra",
+   "GENDER": "Male",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Thane",
+   "NUMBER 1": 9930084986,
+   "MOBILE NUMBER 2": 7021474805,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "mishraroshan999@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Vaibhav Dhanyakumar Waste",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Pune",
+   "NUMBER 1": 9860832783,
+   "MOBILE NUMBER 2": 8237000034,
+   "PLACE OF ISSUE": "Pune",
+   "EMAIL ADDRESS": "vastevaibhav2002@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Lokesh Navnath Birdawade",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Pune",
+   "NUMBER 1": 8956902424,
+   "MOBILE NUMBER 2": 9822869129,
+   "PLACE OF ISSUE": "Pune",
+   "EMAIL ADDRESS": "lokeshbirdawade87@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Himanshu Jagdish Teke",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Ahmednagar",
+   "NUMBER 1": 8793500881,
+   "MOBILE NUMBER 2": 7066254008,
+   "PLACE OF ISSUE": "Pune",
+   "EMAIL ADDRESS": "Himanshuteke30@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Dhanashri Ravindra Bhabad",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 9923221041,
+   "MOBILE NUMBER 2": 7218740357,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "Aakashbhabad44@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Abhishek Dharmendra Salve",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 9890262457,
+   "MOBILE NUMBER 2": 9689639020,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "Abhisheksalve422006@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Yogesh Dhananjay Patil",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 9372460260,
+   "MOBILE NUMBER 2": 9689869740,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "d.k.patil015@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Anand Deepak Malu",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Jalgaon",
+   "NUMBER 1": 9175584880,
+   "MOBILE NUMBER 2": 9405446058,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "maluaanand@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Rutik Shailesh Sonar",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nandurbar",
+   "NUMBER 1": 8378906614,
+   "MOBILE NUMBER 2": 9423496650,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "ritiksonar24@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Athrav Sanjay Joshi",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 8793602836,
+   "MOBILE NUMBER 2": 8983326515,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "jatharav88@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Namira Aarif Shaikh",
+   "GENDER": "Female",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 9028544808,
+   "MOBILE NUMBER 2": 9588602230,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "aarifshaikh0303@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Affan Akram Shaikh",
+   "GENDER": "Male",
+   "UNIVERSITY": "Mari State University",
+   "CITY": "Nashik",
+   "NUMBER 1": 8623845786,
+   "MOBILE NUMBER 2": 8623865786,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "affanshaik441@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Mali Ashutosh Dattatray",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 9823234994,
+   "MOBILE NUMBER 2": 9545983115,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "Ashutoshmali1258@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Kadam Sonali Prakash",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Mumbai",
+   "NUMBER 1": 9773766729,
+   "MOBILE NUMBER 2": 9076161667,
+   "PLACE OF ISSUE": "mumbai",
+   "EMAIL ADDRESS": "sonalikadam1579@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Nikam Ajinkya Prakash",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Nashik",
+   "NUMBER 1": 9766881313,
+   "MOBILE NUMBER 2": 7083291120,
+   "PLACE OF ISSUE": "mumbai",
+   "EMAIL ADDRESS": "ajinkyanikam40@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Bagul Vedika Rajendra",
+   "GENDER": "Female",
+   "UNIVERSITY": "Osh State University (IMF)",
+   "CITY": "Kalyan",
+   "NUMBER 1": 9823146098,
+   "MOBILE NUMBER 2": 7020618138,
+   "PLACE OF ISSUE": "Nashik",
+   "EMAIL ADDRESS": "rajendrabagul33@gmail.com",
+   "JOINING YEAR": 2018
+ },
+ {
+   "STUDENT NAME": "Patil Rohit Mohan",
+   "GENDER": "Male",
+   "UNIVERSITY": "Jalal-abad State Univesity",
+   "CITY": "Palghar",
+   "NUMBER 1": 7887962999,
+   "MOBILE NUMBER 2": 7887592999,
+   "PLACE OF ISSUE": "Mumbai",
+   "EMAIL ADDRESS": "patilrohit8998@gmail.com",
+   "JOINING YEAR": 2018
+ },
+  {
+    "STUDENT NAME": "CHAUDHARI RUSHIKESH SOPAN",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8999105325,
+    "MOBILE NUMBER 2": 9404688690,
+    "EMAIL ADDRESS": "rushikeshchaudhari818@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "GANGURDE VAISHNAVI NILKANTH",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9860823519,
+    "MOBILE NUMBER 2": 8805598586,
+    "EMAIL ADDRESS": "nvgangurde150@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "KOTKAR ABHIJEET BABASAHEB",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9921740767,
+    "MOBILE NUMBER 2": 9850819539,
+    "EMAIL ADDRESS": "kotkarabhijeet2244@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "GAVALI SWANAND DATTATRAY",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7798186599,
+    "MOBILE NUMBER 2": 9021509331,
+    "EMAIL ADDRESS": "swanand123gavali@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PAWAR GAURAV SAMADHAN",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Malegaon",
+    "NUMBER 1": 7378414567,
+    "MOBILE NUMBER 2": 9975201900,
+    "EMAIL ADDRESS": "gauravpawar6464@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "SHETAKE VAISHNAVI RAVINDRA",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 9975107260,
+    "MOBILE NUMBER 2": 9881863132,
+    "EMAIL ADDRESS": "vaishanvishetake2001@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "BORADE DARSHAN SANJAY",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8888642099,
+    "MOBILE NUMBER 2": 9371535403,
+    "EMAIL ADDRESS": "darshanborade123@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "JAGTAP PRADEEP RAVINDRA",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7744873665,
+    "MOBILE NUMBER 2": 9881697963,
+    "EMAIL ADDRESS": "jagtappradip16@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PAWAR TEJAS KISHOR",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8605514814,
+    "MOBILE NUMBER 2": 9850378824,
+    "EMAIL ADDRESS": "tejaspawar86055@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "JADHAV ABHAYA BHARAT",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ojhar",
+    "NUMBER 1": 9730003521,
+    "MOBILE NUMBER 2": 9552585525,
+    "EMAIL ADDRESS": "abhayabjadhav@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "WAHULE VISHAKHA PRABHAKAR",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9226748713,
+    "MOBILE NUMBER 2": 9370916549,
+    "EMAIL ADDRESS": "Wahulevishakha@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PATIL RUSHIKESH KESHAV",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7057087371,
+    "MOBILE NUMBER 2": 8446156608,
+    "EMAIL ADDRESS": "rkpatil0611@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PAWAR NIKHIL RAVINDRA",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9823979592,
+    "MOBILE NUMBER 2": 9765445129,
+    "EMAIL ADDRESS": "nickpawar7368@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "SADGIR AVIRAJ PANDHRINATH",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9325380406,
+    "MOBILE NUMBER 2": 9623287800,
+    "EMAIL ADDRESS": "plsadgir@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "WANI ROSHAN VILAS",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Dhule",
+    "NUMBER 1": 9404815516,
+    "MOBILE NUMBER 2": 9422289216,
+    "EMAIL ADDRESS": "rohan.wani2416@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "KHAIRNAR DHANSHRI VITTHAL",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7588138945,
+    "MOBILE NUMBER 2": 9834346184,
+    "EMAIL ADDRESS": "vitthalkhairnar9900@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "SHINDE SAMRUDDHI BHARAT",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Malegaon",
+    "NUMBER 1": 8087180800,
+    "MOBILE NUMBER 2": 9764602383,
+    "EMAIL ADDRESS": "samruddhishinde@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "SASANE HRISHIKESH SUNIL",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7709030767,
+    "MOBILE NUMBER 2": 9890067624,
+    "EMAIL ADDRESS": "hrishikeshssasane2001@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "SURYAGAN HRITIKA DILIP",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Pune",
+    "NUMBER 1": 8390443192,
+    "MOBILE NUMBER 2": 9168947060,
+    "EMAIL ADDRESS": "hsurygan0301@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PATIL SAYALI SUNIL",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Thane",
+    "NUMBER 1": 7887555770,
+    "MOBILE NUMBER 2": 8108080508,
+    "EMAIL ADDRESS": "patil.sunil@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "MALI APURVA NIVRUTTI",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8888517664,
+    "MOBILE NUMBER 2": 8888517661,
+    "EMAIL ADDRESS": "apurvamali04@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "SANAP SAKSHI RAMDAS",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9423475872,
+    "MOBILE NUMBER 2": 7720064203,
+    "EMAIL ADDRESS": "sakshisanap1605@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "KARLE PIYUSH SURESH",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9422220045,
+    "MOBILE NUMBER 2": 9422083235,
+    "EMAIL ADDRESS": "jayashrikarle01@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "GODSE TEJAS SATISH",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8459702704,
+    "MOBILE NUMBER 2": 9975977541,
+    "EMAIL ADDRESS": "tejasgodase3@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "GAWALI DAMINI RAJKUMAR",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9960878409,
+    "MOBILE NUMBER 2": 9028973670,
+    "EMAIL ADDRESS": "rajkumargawali75@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "BORADE BHAKTI SAHEBRAO",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9822174256,
+    "MOBILE NUMBER 2": 7776865164,
+    "EMAIL ADDRESS": "bhakti251201@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "LASURE OMKAR SUNIL",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9075772031,
+    "MOBILE NUMBER 2": 9209262054,
+    "EMAIL ADDRESS": "omkarlasure2021@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "HINGMIRE OMKAR CHANDRAKANT",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9021278100,
+    "MOBILE NUMBER 2": 9326659310,
+    "EMAIL ADDRESS": "omkar60557@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "DHAGE RUTIK VILAS",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Tisgaon",
+    "NUMBER 1": 9970067963,
+    "MOBILE NUMBER 2": 7498296291,
+    "EMAIL ADDRESS": "rutikdhage2000@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "GODSE SHUBHAM SANJAY",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Sangola",
+    "NUMBER 1": 9890634616,
+    "MOBILE NUMBER 2": 9404302964,
+    "EMAIL ADDRESS": "shubhamgodase.sg97@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "KUBADE PRAJWAL KISHOR",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Pune",
+    "NUMBER 1": 7218185285,
+    "MOBILE NUMBER 2": 9822185285,
+    "EMAIL ADDRESS": "omkar3219@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "ADSAR ROHIT AJAY",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Pune",
+    "NUMBER 1": 9423327705,
+    "MOBILE NUMBER 2": 7972262113,
+    "EMAIL ADDRESS": "ajayadsar69@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "BAGAL ANUJ ANNASAHEB",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Thane",
+    "NUMBER 1": 9167717533,
+    "MOBILE NUMBER 2": 9773638663,
+    "EMAIL ADDRESS": "anujbagal01@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PATIL DARSHAN DADASO",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 7020341759,
+    "MOBILE NUMBER 2": 9921886969,
+    "EMAIL ADDRESS": "darshanpatil1836@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "DAMGUDE SUMEEET SHANTARAM",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Pune",
+    "NUMBER 1": 9067021641,
+    "MOBILE NUMBER 2": 9011093414,
+    "EMAIL ADDRESS": "sumeetdamgude@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PATIL HARSHVARDHAN SURYAJI",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 9767373916,
+    "MOBILE NUMBER 2": 9822651876,
+    "EMAIL ADDRESS": "harshwardhanpatil18@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "KAMBLE PRAJAKTA VILAS",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 9021292982,
+    "MOBILE NUMBER 2": 8975161656,
+    "EMAIL ADDRESS": "prajaktakamble728@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PATIL RUCHITA RAMKRISHNA",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9867076868,
+    "MOBILE NUMBER 2": 8452927172,
+    "EMAIL ADDRESS": "rupatil1669@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "WAGH SAKSHI ANIL",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9765139436,
+    "MOBILE NUMBER 2": 9822819977,
+    "EMAIL ADDRESS": "sakshiwagh508@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "BHALE SNEHA SHANKAR",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Solapur",
+    "NUMBER 1": 8605080008,
+    "MOBILE NUMBER 2": 1111111111,
+    "EMAIL ADDRESS": "snehashankar913@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "CHAVAN AJINKYA PRAMOD",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9766769982,
+    "MOBILE NUMBER 2": 9112974601,
+    "EMAIL ADDRESS": "pashy007@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "JAGTAP SONALI SUNIL",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9890331559,
+    "MOBILE NUMBER 2": 9373320322,
+    "EMAIL ADDRESS": "sonalijagtap1610@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "DHOLE SAKSHI SURESH",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9822661408,
+    "MOBILE NUMBER 2": 9823351625,
+    "EMAIL ADDRESS": "sakshidhole6@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PATIL TANUJA MOHAN",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8999326798,
+    "MOBILE NUMBER 2": 8983441611,
+    "EMAIL ADDRESS": "patiltanuja2000@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "DESHPANDE VEDANT PRAVIN",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9881052983,
+    "MOBILE NUMBER 2": 9420231579,
+    "EMAIL ADDRESS": "vedant.deshpande.257@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "NIGAL ANIKET VILAS",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9579869342,
+    "MOBILE NUMBER 2": 9890649993,
+    "EMAIL ADDRESS": "aniketnigal007@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "WAKUDE SUYOG SUNIL",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8830006979,
+    "MOBILE NUMBER 2": 8830009069,
+    "EMAIL ADDRESS": "suyogwakude567@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "SUPE MRUNALI GORAKSHNATH",
+    "GENDER": "Female",
+    "UNIVERSITY": "Bukhara State Medical Institute",
+    "CITY": "Thane",
+    "NUMBER 1": 9172074559,
+    "MOBILE NUMBER 2": 9004498180,
+    "EMAIL ADDRESS": "mrunalisupe2627@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "THAKKAR SHRUTI SHANKAR",
+    "GENDER": "Female",
+    "UNIVERSITY": "Bukhara State Medical Institute",
+    "CITY": "Nashik",
+    "NUMBER 1": 9766166880,
+    "MOBILE NUMBER 2": 9766166881,
+    "EMAIL ADDRESS": "shrutithakkar711@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "GANGURDE TARUN PRADEEP",
+    "GENDER": "Male",
+    "UNIVERSITY": "Bukhara State Medical Institute",
+    "CITY": "Nashik",
+    "NUMBER 1": 7719050062,
+    "MOBILE NUMBER 2": 7666767452,
+    "EMAIL ADDRESS": "tarungangurde1@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "DALVI PRABODH VIJAY",
+    "GENDER": "Male",
+    "UNIVERSITY": "Bukhara State Medical Institute",
+    "CITY": "Padgha",
+    "NUMBER 1": 9209209077,
+    "MOBILE NUMBER 2": 9226717868,
+    "EMAIL ADDRESS": "prabodhdalvi27@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "NARAYANE NILESH ARUN",
+    "GENDER": "Male",
+    "UNIVERSITY": "Bukhara State Medical Institute",
+    "CITY": "Sangamner",
+    "NUMBER 1": 9371864982,
+    "MOBILE NUMBER 2": 7057573474,
+    "EMAIL ADDRESS": "nileshnarayane77@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "PATIL HARSHVARDHAN VIJAY",
+    "GENDER": "Male",
+    "UNIVERSITY": "Bukhara State Medical Institute",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 7887750070,
+    "MOBILE NUMBER 2": 9921209905,
+    "EMAIL ADDRESS": "harshwardhanpatil@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "GAGARE PRANAV PRAVIN",
+    "GENDER": "Male",
+    "UNIVERSITY": "Bukhara State Medical Institute",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9096057759,
+    "MOBILE NUMBER 2": 9623262841,
+    "EMAIL ADDRESS": "pranavgagre780@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "BADRE PRATHAMESH JANARDHAN",
+    "GENDER": "Male",
+    "UNIVERSITY": "Jalal-abad State Univesity",
+    "CITY": "Manmad",
+    "NUMBER 1": 8623868030,
+    "MOBILE NUMBER 2": 8308432563,
+    "EMAIL ADDRESS": "prathmeshbadre247@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "DHUMAL SURAJ GULABRAO",
+    "GENDER": "Male",
+    "UNIVERSITY": "Jalal-abad State Univesity",
+    "CITY": "Jalna",
+    "NUMBER 1": 9637512430,
+    "MOBILE NUMBER 2": 1111111111,
+    "EMAIL ADDRESS": "surajdhumal430@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "Ramsakha Gayatri Chandrashekhar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9422962157,
+    "MOBILE NUMBER 2": 9325158836,
+    "EMAIL ADDRESS": "csc.gdc1@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "Deshmukh Tanmay Mohan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9403063547,
+    "MOBILE NUMBER 2": 9822591820,
+    "EMAIL ADDRESS": "tnmaydeshmukh05@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "Thakare Rashika Manohar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7020176563,
+    "MOBILE NUMBER 2": 9604089072,
+    "EMAIL ADDRESS": "Manohar1621@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "kare Aditi Vasant",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9423194387,
+    "MOBILE NUMBER 2": 7796428453,
+    "EMAIL ADDRESS": "kareaditi@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "Patil Sardar Shankar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 7038523987,
+    "MOBILE NUMBER 2": 7507335572,
+    "EMAIL ADDRESS": "sardarpatil3987@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "Kankale Saksham Abhimanyu",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9860344736,
+    "MOBILE NUMBER 2": 8007522985,
+    "EMAIL ADDRESS": "saksham2607@gmail.com",
+    "JOINING YEAR": 2019
+  },
+  {
+    "STUDENT NAME": "Pranav Rajendra Kale",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9960651212,
+    "MOBILE NUMBER 2": 8007182220,
+    "EMAIL ADDRESS": "pranavkale265@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Tanmay Bhimraj Shinde",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9423161892,
+    "MOBILE NUMBER 2": 9423161893,
+    "EMAIL ADDRESS": "tanmayshinde780@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "MAHIMA RAJKUMAR SHAHARE",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Chandrapur",
+    "NUMBER 1": 9422580663,
+    "MOBILE NUMBER 2": 9325614976,
+    "EMAIL ADDRESS": "Mahimashahare22102001@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Vaibhav Rajendra Killedar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Pune",
+    "NUMBER 1": 9021793967,
+    "MOBILE NUMBER 2": 9325614976,
+    "EMAIL ADDRESS": "vaibhavkilledar14@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Kalpesh Vijay Raikar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9420751604,
+    "MOBILE NUMBER 2": 9011335715,
+    "EMAIL ADDRESS": "kalpeshraikar123@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Avanti Virendra Deore",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9637117223,
+    "MOBILE NUMBER 2": 8149423742,
+    "EMAIL ADDRESS": "avantidevre@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Himanshu Nanasaheb Patil",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9421514367,
+    "MOBILE NUMBER 2": 9284486950,
+    "EMAIL ADDRESS": "himanshupatil2107@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Patil Tejswee ashok",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9763009796,
+    "MOBILE NUMBER 2": 9139022993,
+    "EMAIL ADDRESS": "patiltejswee2002@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Arpita Unnikrishnan Nair",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9881155215,
+    "MOBILE NUMBER 2": 9518354698,
+    "EMAIL ADDRESS": "arpitanair35@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "suraj sharad bhoknal",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9511862948,
+    "MOBILE NUMBER 2": 9359335262,
+    "EMAIL ADDRESS": "surajbhoknal2000@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Diksha Sanjay Jagtap",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9623172599,
+    "MOBILE NUMBER 2": 9975533179,
+    "EMAIL ADDRESS": "jagtapdiksha20@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Arti Changdev Gawali",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9881502434,
+    "MOBILE NUMBER 2": 8608713905,
+    "EMAIL ADDRESS": "artigawali354@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Prashant N Shende",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Gondia",
+    "NUMBER 1": 9370950991,
+    "MOBILE NUMBER 2": 7798505933,
+    "EMAIL ADDRESS": "shendeprashant22@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Kunal Singh Tomar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Mumbai",
+    "NUMBER 1": 9321111271,
+    "MOBILE NUMBER 2": 9321755599,
+    "EMAIL ADDRESS": "kunalsinghtomar01@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Taywade Bhaskar Ankit",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 9823754353,
+    "MOBILE NUMBER 2": 7385753167,
+    "EMAIL ADDRESS": "ankittaywade67@gmailcom",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Jain Archit Amit",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Tendukheda",
+    "NUMBER 1": 9644331722,
+    "MOBILE NUMBER 2": 9425496750,
+    "EMAIL ADDRESS": "architjainno1@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Tamrakar Shivesh Nandan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Gotegaon",
+    "NUMBER 1": 77710740511,
+    "MOBILE NUMBER 2": 9425816160,
+    "EMAIL ADDRESS": "shiveshthakur@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Shaikh Arshad Hussain",
+    "GENDER": "Male",
+    "UNIVERSITY": "Bukhara State Medical Institute",
+    "CITY": "Aurangabad",
+    "NUMBER 1": 7038267898,
+    "MOBILE NUMBER 2": 9923722034,
+    "EMAIL ADDRESS": "husenshaikh99.hs@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Gawali Yash Rajendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Pune",
+    "NUMBER 1": 9764516363,
+    "MOBILE NUMBER 2": 9604882145,
+    "EMAIL ADDRESS": "yashgawali222@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Ambekar Nandini Santosh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8080979097,
+    "MOBILE NUMBER 2": 9284178783,
+    "EMAIL ADDRESS": "ambekarsantosh1999@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Khan Nida Mo. Zafar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Narsinghpur",
+    "NUMBER 1": 8817126974,
+    "MOBILE NUMBER 2": 88276075712,
+    "EMAIL ADDRESS": "nidakhan11219@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Wankhade Yash Govardhan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 9588687814,
+    "MOBILE NUMBER 2": 9822399457,
+    "EMAIL ADDRESS": "yashwankhade88@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Patare Sakshi Vijay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9307385453,
+    "MOBILE NUMBER 2": 9970981752,
+    "EMAIL ADDRESS": "pataresakshi610@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Dube Saisuman Sanjay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Sangamner",
+    "NUMBER 1": 9322432425,
+    "MOBILE NUMBER 2": 9922217854,
+    "EMAIL ADDRESS": "saisuman5530@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Tumade Niharika Bhagwan",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Palghar",
+    "NUMBER 1": 8888317328,
+    "MOBILE NUMBER 2": 9146201586,
+    "EMAIL ADDRESS": "nehatumade2020@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Kuklare Rusahikesh Shivaji",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Aurangabad",
+    "NUMBER 1": 8767033430,
+    "MOBILE NUMBER 2": 9604280500,
+    "EMAIL ADDRESS": "kuklareushikesh22@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Shingade Siddesh madhukar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Akole",
+    "NUMBER 1": 9359706577,
+    "MOBILE NUMBER 2": 9403838624,
+    "EMAIL ADDRESS": "siddeshms123@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Gosavi Raj Vilas",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yeola",
+    "NUMBER 1": 9307135093,
+    "MOBILE NUMBER 2": 8999066815,
+    "EMAIL ADDRESS": "rajgosavi1028@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Takate Swapnil Manohar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9823514616,
+    "MOBILE NUMBER 2": 9325732454,
+    "EMAIL ADDRESS": "swapniltakate22@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "karale Sanket Bhaskar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9096626620,
+    "MOBILE NUMBER 2": 9420682521,
+    "EMAIL ADDRESS": "sanketya9@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Khamkar Dhiraj Dattatray",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9322469686,
+    "MOBILE NUMBER 2": 9881518541,
+    "EMAIL ADDRESS": "dhirajkhamkar132@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Chavan Amey Devendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Mumbai",
+    "NUMBER 1": 7738907509,
+    "MOBILE NUMBER 2": 9082236197,
+    "EMAIL ADDRESS": "ameychavan2000@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Purkar Sayali Ravindra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9405537410,
+    "MOBILE NUMBER 2": 9423970059,
+    "EMAIL ADDRESS": "sayali0214@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Amesar Mehul Vijay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8766472836,
+    "MOBILE NUMBER 2": 8668584648,
+    "EMAIL ADDRESS": "mehulamesar1706@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Khan Ahemedhussain Shahmohmmad",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9890116285,
+    "MOBILE NUMBER 2": 7972356326,
+    "EMAIL ADDRESS": "ahmedhussainkhan45@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Gadkar Prathmesh Sanjay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9172167265,
+    "MOBILE NUMBER 2": 9881244014,
+    "EMAIL ADDRESS": "prathmedhgdkar5@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Sharma Anant Nitin",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Sridham",
+    "NUMBER 1": 9145901491,
+    "MOBILE NUMBER 2": 9425467947,
+    "EMAIL ADDRESS": "anant0901sharma@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Jaiswar Vinaykumar Satyanarayan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9166544556,
+    "MOBILE NUMBER 2": 9850260586,
+    "EMAIL ADDRESS": "kumarjaiswarvinay@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Rathod Tanmay Dinkar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 7038705804,
+    "MOBILE NUMBER 2": 9325588710,
+    "EMAIL ADDRESS": "rathodtanmay1927@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Kulkarni Saptak Dinesh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8975688775,
+    "MOBILE NUMBER 2": 7030272002,
+    "EMAIL ADDRESS": "sapk2725@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Suvarna Niti Uday",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Thane",
+    "NUMBER 1": 7021676914,
+    "MOBILE NUMBER 2": 8104776307,
+    "EMAIL ADDRESS": "nitisuvrna23@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Pashte Anis Subhash",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Thane",
+    "NUMBER 1": 9326043132,
+    "MOBILE NUMBER 2": 9820525424,
+    "EMAIL ADDRESS": "anishpashte123@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Mandawgade Sarang Sunil",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Waedha",
+    "NUMBER 1": 9921737369,
+    "MOBILE NUMBER 2": 9890793862,
+    "EMAIL ADDRESS": "saragjain05@gmail.com",
+    "JOINING YEAR": 2020
+  },
+  {
+    "STUDENT NAME": "Kakade Utkarsh Balasaheb",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7020047836,
+    "MOBILE NUMBER 2": 9604053260,
+    "EMAIL ADDRESS": "utkarshkakade852002@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Gavit Saurabh Pandurang",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9404545677,
+    "MOBILE NUMBER 2": 9404427232,
+    "EMAIL ADDRESS": "saurabhpugavit007@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Pawar Sundaram Prabhakar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Shrirampur",
+    "NUMBER 1": 9921804893,
+    "MOBILE NUMBER 2": 7057053920,
+    "EMAIL ADDRESS": "Sundarampawar27@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Patil Parikshit Vijay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9096333252,
+    "MOBILE NUMBER 2": 9953866104,
+    "EMAIL ADDRESS": "rahulpatil4444@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Munazza Sadaf Sayyed Ashraf",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9326849130,
+    "MOBILE NUMBER 2": 8999684008,
+    "EMAIL ADDRESS": "munazzasayyed5@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Tisage Lokesh Dharmendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Malegaon",
+    "NUMBER 1": 8275582696,
+    "MOBILE NUMBER 2": 7875911444,
+    "EMAIL ADDRESS": "lokeshtisge@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Ansari Farzaad Vasif",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9823776553,
+    "MOBILE NUMBER 2": 9322097310,
+    "EMAIL ADDRESS": "vasifansari007@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Sayyad Hanzala Mujahid",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8087065615,
+    "MOBILE NUMBER 2": 8237160695,
+    "EMAIL ADDRESS": "hanzala.sayyad.3@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Rathod Swati Govardhan",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nanded",
+    "NUMBER 1": 8007817098,
+    "MOBILE NUMBER 2": 7588427647,
+    "EMAIL ADDRESS": "rathodswati340@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Jagtap Nishant Sanjay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Kalyan",
+    "NUMBER 1": 9004076322,
+    "MOBILE NUMBER 2": 9594134843,
+    "EMAIL ADDRESS": "jagtapnishant6@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Saini Avinash Ashok",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Divrala",
+    "NUMBER 1": 9423158846,
+    "MOBILE NUMBER 2": 9860207122,
+    "EMAIL ADDRESS": "thebeastaviwwe619@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Rai Vedant Shivkumar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Gotegaon",
+    "NUMBER 1": 6267108817,
+    "MOBILE NUMBER 2": 8966830800,
+    "EMAIL ADDRESS": "Vedantraivedantrai620@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Shinde Omkar Ravindra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh Medical University (IMU)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9881197077,
+    "MOBILE NUMBER 2": 9665449292,
+    "EMAIL ADDRESS": "omkar312shinde@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Bodke Pragati Muralidhar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9404187898,
+    "MOBILE NUMBER 2": 8830189117,
+    "EMAIL ADDRESS": "pragatibodke3@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Wakchaure Sharyu Dinkar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 7559256570,
+    "MOBILE NUMBER 2": 8605611001,
+    "EMAIL ADDRESS": "Sharyuwakchaure123@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Talekar Shivani Sopan",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7038861582,
+    "MOBILE NUMBER 2": 9763879817,
+    "EMAIL ADDRESS": "shivanitalekar96@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Amrutkar Vaishnavi Manoj",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9420444281,
+    "MOBILE NUMBER 2": 9420444282,
+    "EMAIL ADDRESS": "vaishnaviamrutkar29@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Bakare Aniket Pankaj",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9175580651,
+    "MOBILE NUMBER 2": 9272720266,
+    "EMAIL ADDRESS": "aniketbakare015@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Jadhav Abhishek Yuvraj",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9146107086,
+    "MOBILE NUMBER 2": 8329635778,
+    "EMAIL ADDRESS": "abhishekyjadhav2003@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Dode Sayali Santosh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8975995469,
+    "MOBILE NUMBER 2": 8442641181,
+    "EMAIL ADDRESS": "sschalse@rediffmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Pagare Jayashree Subhash",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Kalyan",
+    "NUMBER 1": 9930134368,
+    "MOBILE NUMBER 2": 8108530368,
+    "EMAIL ADDRESS": "jidnyasa.pagare2017@yahoo.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Ibhad Praveen Suresh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Mumbai",
+    "NUMBER 1": 7620328303,
+    "MOBILE NUMBER 2": 9975887224,
+    "EMAIL ADDRESS": "pravinibhad@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Bharwad Satish Bhagwann",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 7798298171,
+    "MOBILE NUMBER 2": 9518527573,
+    "EMAIL ADDRESS": "satishbharwad108@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Deore Sakshi Yashwantt",
+    "GENDER": "Female",
+    "UNIVERSITY": "Jalal-abad State Univesity",
+    "CITY": "Nashik",
+    "NUMBER 1": 8262842831,
+    "MOBILE NUMBER 2": 9325456691,
+    "EMAIL ADDRESS": "sakshi19deore@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Gaddamwar Prathamesh Suresh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 8788121630,
+    "MOBILE NUMBER 2": 9172029440,
+    "EMAIL ADDRESS": "prathmeshgaddamwar1@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Bawake Madhura Sharad",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8637720884,
+    "MOBILE NUMBER 2": 9767335584,
+    "EMAIL ADDRESS": "Madhurabawake@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Bhoir Prerna Kiran",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9834625824,
+    "MOBILE NUMBER 2": 8999446369,
+    "EMAIL ADDRESS": "prernabhoir6102@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Satalkar Pratham Ravindra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9022903761,
+    "MOBILE NUMBER 2": 9823826676,
+    "EMAIL ADDRESS": "satalkarpratham@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Lawand Prathmesh Kacharu",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9970432181,
+    "MOBILE NUMBER 2": 9623342824,
+    "EMAIL ADDRESS": "prathmeshlawand2112@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Dherange Chirag Dattatray",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8999585733,
+    "MOBILE NUMBER 2": 9881148831,
+    "EMAIL ADDRESS": "dherangechirag@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Pandit Kirti gulabchand",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8805849295,
+    "MOBILE NUMBER 2": 9325945959,
+    "EMAIL ADDRESS": "kirtioandit.39@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Padvi Namrata Pandurang",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9146292933,
+    "MOBILE NUMBER 2": 9921391158,
+    "EMAIL ADDRESS": "padvinamrata2001@gmailc.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Ramnani Paras Raju",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7020369626,
+    "MOBILE NUMBER 2": 9326084140,
+    "EMAIL ADDRESS": "parasramnani7102@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Chavan Sneha Vijay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7721028488,
+    "MOBILE NUMBER 2": 8975406999,
+    "EMAIL ADDRESS": "snehavijaychavan1@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Aher Samiksha Ajay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9657742087,
+    "MOBILE NUMBER 2": 8329043788,
+    "EMAIL ADDRESS": "aher.ajay@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Shoyeb Shabbir Shaikh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9922078746,
+    "MOBILE NUMBER 2": 7499770381,
+    "EMAIL ADDRESS": "drpshabbirsh.ahmednagar@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Barve Neha Prashant",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9422249098,
+    "MOBILE NUMBER 2": 7378982765,
+    "EMAIL ADDRESS": "nehabarve003@gmai.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Patil Aniket Madhukar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9960609385,
+    "MOBILE NUMBER 2": 8262045151,
+    "EMAIL ADDRESS": "ani05051403@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Jawale Abhishesk Babasaheb",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 7219575717,
+    "MOBILE NUMBER 2": 9011449454,
+    "EMAIL ADDRESS": "abhishekjawale18@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Khandelwal Sparsh Gopal",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 7620055304,
+    "MOBILE NUMBER 2": 9423159207,
+    "EMAIL ADDRESS": "sparshkhandelwal06@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Jonwal Sanjay Narsing",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalna",
+    "NUMBER 1": 8623882802,
+    "MOBILE NUMBER 2": 9822677641,
+    "EMAIL ADDRESS": "sanjayjonwal9579@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Khadgir Prajanya Naresh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9422861626,
+    "MOBILE NUMBER 2": 9420636448,
+    "EMAIL ADDRESS": "hemlatasadgir54@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Rumane Mayuri Shantaram",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9657964478,
+    "MOBILE NUMBER 2": 9657303090,
+    "EMAIL ADDRESS": "mayurirumne@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Kajale Vedant Asaram",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9607307559,
+    "MOBILE NUMBER 2": 9421682677,
+    "EMAIL ADDRESS": "kajale0007@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Hole Tanay Satish",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9404595535,
+    "MOBILE NUMBER 2": 9422562775,
+    "EMAIL ADDRESS": "svhole75@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Vanwadi Jiya Rajesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9021089285,
+    "MOBILE NUMBER 2": 9011399685,
+    "EMAIL ADDRESS": "jiyavanwadi2004@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Sharma Raj Shivprasad",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Narsinghpur",
+    "NUMBER 1": 8871511187,
+    "MOBILE NUMBER 2": 9424732807,
+    "EMAIL ADDRESS": "rajsharma8871@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Kukade Hrushikesh Sanjay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 8999085939,
+    "MOBILE NUMBER 2": 8530753155,
+    "EMAIL ADDRESS": "hrushikeshkukade11@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Gavhankar Suniket kailash",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 9527530164,
+    "MOBILE NUMBER 2": 9423054464,
+    "EMAIL ADDRESS": "suniketgavhankar@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Shewale Vaibhav Sunil",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9921197058,
+    "MOBILE NUMBER 2": 8381003591,
+    "EMAIL ADDRESS": "vaibhavshewale100@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Garodi Ekta Ganesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 8669738484,
+    "MOBILE NUMBER 2": 9130026311,
+    "EMAIL ADDRESS": "ektagarodi08@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Chavan Sakshi Manoj",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 7769014002,
+    "MOBILE NUMBER 2": 9423612201,
+    "EMAIL ADDRESS": "sakshichavan572@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Lone Vaibhav Babasaheb",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Aurangabad",
+    "NUMBER 1": 7709110090,
+    "MOBILE NUMBER 2": 9975798865,
+    "EMAIL ADDRESS": "vaibhavlone326@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Shelar Shalaka Mahesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Pune",
+    "NUMBER 1": 9011794328,
+    "MOBILE NUMBER 2": 9850792074,
+    "EMAIL ADDRESS": "mahesh5676@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Gupta Sahil Umeshchandra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8806748456,
+    "MOBILE NUMBER 2": 7385551841,
+    "EMAIL ADDRESS": "ashil91124@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Shinde Pranali Prabhakar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Sangli",
+    "NUMBER 1": 8166568560,
+    "MOBILE NUMBER 2": 7822878220,
+    "EMAIL ADDRESS": "prathmesh719@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Benke Pandurang Savleram",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Thane",
+    "NUMBER 1": 7755961937,
+    "MOBILE NUMBER 2": 9273411271,
+    "EMAIL ADDRESS": "pandurangbenke1999@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Patil Parth Ramnath",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7744056368,
+    "MOBILE NUMBER 2": 7721912100,
+    "EMAIL ADDRESS": "parthpatil1406@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Jadhav Yogesh Dileep",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7350181132,
+    "MOBILE NUMBER 2": 9657457659,
+    "EMAIL ADDRESS": "trendingyog613@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Aher Rutuja Sukdev",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9822791003,
+    "MOBILE NUMBER 2": 9356295439,
+    "EMAIL ADDRESS": "www.sukdev.aher003@gmail.com",
+    "JOINING YEAR": 2021
+  },
+  {
+    "STUDENT NAME": "Sarode Shravani Santosh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Pune",
+    "NUMBER 1": 9822501577,
+    "MOBILE NUMBER 2": 8446526713,
+    "EMAIL ADDRESS": "santoshdsarode137@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Shinde Roshan Sampat",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850568910,
+    "MOBILE NUMBER 2": 9307517246,
+    "EMAIL ADDRESS": "roshnshinde@1012gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Mandavkar Utkarsh Uttam",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 9403455756,
+    "MOBILE NUMBER 2": 7499248771,
+    "EMAIL ADDRESS": "utkarshmandavkar8@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Prearna Dadaso Paraj",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Jayshingpur",
+    "NUMBER 1": 9356442614,
+    "MOBILE NUMBER 2": 9975140000,
+    "EMAIL ADDRESS": "prernaparaj@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Shravani Nivrutti Zade",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9850035144,
+    "MOBILE NUMBER 2": 9822382115,
+    "EMAIL ADDRESS": "shravanizade21@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Anuj Sainath Bhagwat",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9881997744,
+    "MOBILE NUMBER 2": 8767307726,
+    "EMAIL ADDRESS": "saibhafwat11@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "sakshi Sahebrao Kachare",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9850743437,
+    "MOBILE NUMBER 2": 9172101330,
+    "EMAIL ADDRESS": "sakshikachare25@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Rajat Ramesh Lande",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9850038683,
+    "MOBILE NUMBER 2": 8329402280,
+    "EMAIL ADDRESS": "rajatlande88@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Prathamesh Santosh Budhawant",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9822491306,
+    "MOBILE NUMBER 2": 9022455408,
+    "EMAIL ADDRESS": "santoshsir028@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Pushkar Pandurang Karad",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9689990487,
+    "MOBILE NUMBER 2": 9822357941,
+    "EMAIL ADDRESS": "pushkarkarad20@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Hrishikesh Vijay Rathod",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 8262969235,
+    "MOBILE NUMBER 2": 8329887539,
+    "EMAIL ADDRESS": "hrishikeshrathod497@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Hruday Dnyaneshwar Bhor",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9370630333,
+    "MOBILE NUMBER 2": 9403444436,
+    "EMAIL ADDRESS": "hrudaybhor2911@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Aryesh Ajay Mahajan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Murbad",
+    "NUMBER 1": 8459074049,
+    "MOBILE NUMBER 2": 9822192037,
+    "EMAIL ADDRESS": "mahajanaryesh@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Swami Dinesh Dixit",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8767996221,
+    "MOBILE NUMBER 2": 9226196452,
+    "EMAIL ADDRESS": "swamidineshdixit@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Aryaman Uday Dhanwate",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9579219640,
+    "MOBILE NUMBER 2": 9921493770,
+    "EMAIL ADDRESS": "aryandhanwate@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Shubham Sahebrao Bhosale",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9657515113,
+    "MOBILE NUMBER 2": 9423677521,
+    "EMAIL ADDRESS": "shubhambhosale5613@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Disha Vishal Modak",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9423706328,
+    "MOBILE NUMBER 2": 9049181929,
+    "EMAIL ADDRESS": "dishamodak0707@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Riddhi Rajesh Nagpure",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Mumbai",
+    "NUMBER 1": 8668469963,
+    "MOBILE NUMBER 2": 8275016160,
+    "EMAIL ADDRESS": "riddhirn0243@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Prathmesh Rajendra Kala",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Aurangabad",
+    "NUMBER 1": 9511693291,
+    "MOBILE NUMBER 2": 9420265530,
+    "EMAIL ADDRESS": "rajendrakala180@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Sakshi Sanjay Nigal",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9767304410,
+    "MOBILE NUMBER 2": 8488660005,
+    "EMAIL ADDRESS": "sakshinigal28@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Swapnil Suresh Bhor",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8459377359,
+    "MOBILE NUMBER 2": 7588551262,
+    "EMAIL ADDRESS": "sureshbhorakshada@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Akanksha Samadhan Wagh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Aurangabad",
+    "NUMBER 1": 8788610827,
+    "MOBILE NUMBER 2": 8888908788,
+    "EMAIL ADDRESS": "akankshawagh@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Disha Sanjay Chaudhari",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9423181903,
+    "MOBILE NUMBER 2": 9420226649,
+    "EMAIL ADDRESS": "disha.choudhari@rediffmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Kalpesh Kishor Palekar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8767982566,
+    "MOBILE NUMBER 2": 8956813514,
+    "EMAIL ADDRESS": "palekarkalpesh511@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Aniket Rajendra Gangatire",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 8432270771,
+    "MOBILE NUMBER 2": 8806547321,
+    "EMAIL ADDRESS": "aniketgangatire834@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Ashish Ravindra Zatkar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9529109527,
+    "MOBILE NUMBER 2": 8329104541,
+    "EMAIL ADDRESS": "zatkarashish103@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Mayur Ganesh Fulpagare",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Dhule",
+    "NUMBER 1": 9403640209,
+    "MOBILE NUMBER 2": 7620852043,
+    "EMAIL ADDRESS": "mayurfulpagare99@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Khushi Pankaj Bhandari",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8767061158,
+    "MOBILE NUMBER 2": 9970663396,
+    "EMAIL ADDRESS": "kpbhandari111@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Vikrant Vijay Pandit",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9028105668,
+    "MOBILE NUMBER 2": 9834587240,
+    "EMAIL ADDRESS": "vikrantpandit0208@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Akshay Avinash Gaikhe",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9579761149,
+    "MOBILE NUMBER 2": 9422272578,
+    "EMAIL ADDRESS": "akshaygaikhe3059@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Riya Vijay Patil",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8605051175,
+    "MOBILE NUMBER 2": 8888343950,
+    "EMAIL ADDRESS": "inforiya.patil@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Shreya Umeshchandra Nile",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9422254337,
+    "MOBILE NUMBER 2": 9767619369,
+    "EMAIL ADDRESS": "shreyanile@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Vivek Kashinath Patil",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8087527197,
+    "MOBILE NUMBER 2": 9657029658,
+    "EMAIL ADDRESS": "vivekpatil10681068@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Aastha Alok Jaiswal",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 7972862043,
+    "MOBILE NUMBER 2": 9860416951,
+    "EMAIL ADDRESS": "jaiswalaastha11@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Aryan Sharad Chatur",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9356805744,
+    "MOBILE NUMBER 2": 9822060569,
+    "EMAIL ADDRESS": "aryanchatur3377@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Aniket Shivaji Jadhav",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9096349159,
+    "MOBILE NUMBER 2": 8275570275,
+    "EMAIL ADDRESS": "aj8995044@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Tejas Laxman Kamble",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8177992676,
+    "MOBILE NUMBER 2": 9637675797,
+    "EMAIL ADDRESS": "tejaskamble4508@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Patil Pooja Sharad",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Vita",
+    "NUMBER 1": 8799859781,
+    "MOBILE NUMBER 2": 9764966828,
+    "EMAIL ADDRESS": "9796pushpapatil@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Sharvari Avinash Nighut",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8888132795,
+    "MOBILE NUMBER 2": 9422229662,
+    "EMAIL ADDRESS": "nighutsharvari17@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Prathmesh Machhindra Nathe",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9405477559,
+    "MOBILE NUMBER 2": 9763052559,
+    "EMAIL ADDRESS": "pmn9763052559@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Insha Sadique Shaikh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7058254092,
+    "MOBILE NUMBER 2": 7020481285,
+    "EMAIL ADDRESS": "drsadikshaikh9@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Omkar Kerba Mupade",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nanded",
+    "NUMBER 1": 9049822295,
+    "MOBILE NUMBER 2": 9503251634,
+    "EMAIL ADDRESS": "omkarmupade10@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Aditya Vikram Damale",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Shevgaon",
+    "NUMBER 1": 9921679903,
+    "MOBILE NUMBER 2": 9503215583,
+    "EMAIL ADDRESS": "03112003damale@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Borole Dhananjay Yogesh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Bodwad",
+    "NUMBER 1": 8600911819,
+    "MOBILE NUMBER 2": 9421582383,
+    "EMAIL ADDRESS": "dhananjayborole03@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Prasannakumar Rajaram Dakhane",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Manmad",
+    "NUMBER 1": 8530880443,
+    "MOBILE NUMBER 2": 9422261551,
+    "EMAIL ADDRESS": "dakhaneprasanna@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "patil Shreya Damodhar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Panchkula",
+    "NUMBER 1": 9816152779,
+    "MOBILE NUMBER 2": 9017718779,
+    "EMAIL ADDRESS": "patilshreya779@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Kadam Akshay Sakhahari",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Manmad",
+    "NUMBER 1": 9830890023,
+    "MOBILE NUMBER 2": 9096380472,
+    "EMAIL ADDRESS": "kadamakshay281@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Daund Vikas Bapurao",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9730154391,
+    "MOBILE NUMBER 2": 8378003306,
+    "EMAIL ADDRESS": "vikasdaund40705@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Bhagwat Ishwari Ravindra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9595656593,
+    "MOBILE NUMBER 2": 7025403355,
+    "EMAIL ADDRESS": "ishubhagwat29@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Bhatjire Shruti Pravin",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8424900276,
+    "MOBILE NUMBER 2": 7972569677,
+    "EMAIL ADDRESS": "shrutibhatjire716@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Ghaywan Gracy Padmakar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 7558587969,
+    "MOBILE NUMBER 2": 9011918605,
+    "EMAIL ADDRESS": "gracyghaywan@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Naik Shruti Shailendra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9420691444,
+    "MOBILE NUMBER 2": 8767276210,
+    "EMAIL ADDRESS": "Shrunaik1000@gmai.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Sonar Rutuja Anil",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9028644904,
+    "MOBILE NUMBER 2": 9370516620,
+    "EMAIL ADDRESS": "rutujasonar22@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Atkare Smruti Sanjay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Sambhajinagar",
+    "NUMBER 1": 9270308267,
+    "MOBILE NUMBER 2": 9637372600,
+    "EMAIL ADDRESS": "saikan927030@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Solanke Sakshi Abhaysinh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 9322339514,
+    "MOBILE NUMBER 2": 9764674745,
+    "EMAIL ADDRESS": "sakshisolanke750@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Sayyad Muhamad Yunus Shabbir",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Satara",
+    "NUMBER 1": 8010173474,
+    "MOBILE NUMBER 2": 8483810576,
+    "EMAIL ADDRESS": "ahersonali802@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "WADEKAR PRATIK EKNATH",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Aurangabad",
+    "NUMBER 1": 9689664534,
+    "MOBILE NUMBER 2": 9850554534,
+    "EMAIL ADDRESS": "wadekarp39@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "kapile Aditya Pramod",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9881030599,
+    "MOBILE NUMBER 2": 8805408545,
+    "EMAIL ADDRESS": "kapileaditya143@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Kamble Tanay Kiran",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9326083791,
+    "MOBILE NUMBER 2": 8766846082,
+    "EMAIL ADDRESS": "tanaykamble5@gamil.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Pranjali gopal Gangatire",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Bodwad",
+    "NUMBER 1": 8822043991,
+    "MOBILE NUMBER 2": 8623965991,
+    "EMAIL ADDRESS": "pranjalig2423@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Meena Eknath Dhonnar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9665186435,
+    "MOBILE NUMBER 2": 9665186435,
+    "EMAIL ADDRESS": "rahuldhonner47@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Aditya Appasaheb Yadav",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9766342620,
+    "MOBILE NUMBER 2": 9766342620,
+    "EMAIL ADDRESS": "a@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Kor Dhiraj Baliram",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7498339156,
+    "MOBILE NUMBER 2": 7498339156,
+    "EMAIL ADDRESS": "dhirajkor200@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Anita Rajendkra Bagul",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9359295356,
+    "MOBILE NUMBER 2": 9823146098,
+    "EMAIL ADDRESS": "rajnetndjjrabagul33@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Bagwan Taufiq Naeem",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9730852221,
+    "MOBILE NUMBER 2": 7058409493,
+    "EMAIL ADDRESS": "toufique9634@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Pandure Varad Popatrao",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Gangapur",
+    "NUMBER 1": 9420255021,
+    "MOBILE NUMBER 2": 7887938394,
+    "EMAIL ADDRESS": "tuljai87@gmail.com",
+    "JOINING YEAR": 2022
+  },
+  {
+    "STUDENT NAME": "Ahire Sharanya Rajesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8767474516,
+    "MOBILE NUMBER 2": 9307394435,
+    "EMAIL ADDRESS": "sharanyaahire04@gamil.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Khairnar Subodh Lahu",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9923319927,
+    "MOBILE NUMBER 2": 7083006783,
+    "EMAIL ADDRESS": "subodhkhairnar101@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Vispute Siddhesh Kiran",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9823129489,
+    "MOBILE NUMBER 2": 7620349689,
+    "EMAIL ADDRESS": "siddeshvispute277@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Shelke Sarthak Muktaram",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9823357737,
+    "MOBILE NUMBER 2": 7972441248,
+    "EMAIL ADDRESS": "sarthakshelke7737@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Sangale Aishwarya Mahendra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9881170217,
+    "MOBILE NUMBER 2": 9158253072,
+    "EMAIL ADDRESS": "sanaleaishwarya8@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Wakchaure Dnyani Dinesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 7020203177,
+    "MOBILE NUMBER 2": 9881254045,
+    "EMAIL ADDRESS": "dnyaniwakchaure@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Kakad Akanksha Bhausaheb",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850265203,
+    "MOBILE NUMBER 2": 8788781681,
+    "EMAIL ADDRESS": "akankshakakad@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Ponaganti Harshita Rajkumar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 7588499766,
+    "MOBILE NUMBER 2": 9890229828,
+    "EMAIL ADDRESS": "rajkumar.halnk@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Somvanshi Manoj Hemant",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850253899,
+    "MOBILE NUMBER 2": 7387627500,
+    "EMAIL ADDRESS": "manojsomvanshi903@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Pardeshi Swapnil Narendrasing",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Kalwan",
+    "NUMBER 1": 9422620194,
+    "MOBILE NUMBER 2": 9763268371,
+    "EMAIL ADDRESS": "swapardeshi07@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Lokhande Manish Vitthal",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Palghar",
+    "NUMBER 1": 9168979897,
+    "MOBILE NUMBER 2": 9226443490,
+    "EMAIL ADDRESS": "manishlokhande892@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Pajai Abhishek Prakash",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850041973,
+    "MOBILE NUMBER 2": 9921304927,
+    "EMAIL ADDRESS": "pajaiabhishek@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Mehetre Saish Sandeep",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Shrirampur",
+    "NUMBER 1": 9850862628,
+    "MOBILE NUMBER 2": 9730429463,
+    "EMAIL ADDRESS": "saisandip123@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Shewale Urvish Bhika",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8624805846,
+    "MOBILE NUMBER 2": 8329594592,
+    "EMAIL ADDRESS": "urvishshewale@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Deore Shreyash Vilas",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9665266853,
+    "MOBILE NUMBER 2": 8623867953,
+    "EMAIL ADDRESS": "deoreshreyash25@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Valvi Shreyash Pravin",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9420905666,
+    "MOBILE NUMBER 2": 9422287611,
+    "EMAIL ADDRESS": "shreyashvalvi007@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Pathak Kushan Vijaykant",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Etawah",
+    "NUMBER 1": 7895005263,
+    "MOBILE NUMBER 2": 9457287652,
+    "EMAIL ADDRESS": "lavpathak.17@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Mohanty Samprada PabitraKumar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9422669322,
+    "MOBILE NUMBER 2": 9765877976,
+    "EMAIL ADDRESS": "pabi=dipti@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Kawale Vedant Bhupendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Palghar",
+    "NUMBER 1": 8080913047,
+    "MOBILE NUMBER 2": 9511677269,
+    "EMAIL ADDRESS": "kawalevedant963@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Jadhav Disha Dinesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9545872073,
+    "MOBILE NUMBER 2": 9503007682,
+    "EMAIL ADDRESS": "jadhavdisha04@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Dnyane Parth Vipin",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9890976469,
+    "MOBILE NUMBER 2": 9421225987,
+    "EMAIL ADDRESS": "parthdnayne@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Khandait Kartik Babasaheb",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Pune",
+    "NUMBER 1": 8806022333,
+    "MOBILE NUMBER 2": 9168616317,
+    "EMAIL ADDRESS": "khandaitkartik958@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Suryawanshi Darshan Yogesh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 8770089017,
+    "MOBILE NUMBER 2": 9818907691,
+    "EMAIL ADDRESS": "darshsurya484@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Gunjote Abhishek Ramchandra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Osmanabad",
+    "NUMBER 1": 9404622755,
+    "MOBILE NUMBER 2": 7083860325,
+    "EMAIL ADDRESS": "abhishekgunjote285@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Shelar Sagar Khandu",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9225857068,
+    "MOBILE NUMBER 2": 7020438845,
+    "EMAIL ADDRESS": "sagarshelarsks@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Jadhav Swarangi Pravin",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9689402058,
+    "MOBILE NUMBER 2": 9423137032,
+    "EMAIL ADDRESS": "pravinji5675@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bagul shravani Rajendra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 8275281181,
+    "MOBILE NUMBER 2": 8208554510,
+    "EMAIL ADDRESS": "no_email@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Kachare Omkar Bajirao",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Pune",
+    "NUMBER 1": 7767803973,
+    "MOBILE NUMBER 2": 8208112733,
+    "EMAIL ADDRESS": "omkarkachare73@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Sonawane Samrudhi Anand",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Pune",
+    "NUMBER 1": 7410799388,
+    "MOBILE NUMBER 2": 9921219634,
+    "EMAIL ADDRESS": "dr.anand110@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Nikhade Varad Makarand",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Sambhajinagar",
+    "NUMBER 1": 9371426606,
+    "MOBILE NUMBER 2": 9767744101,
+    "EMAIL ADDRESS": "varunikhade04@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Mishra Aditya Kumar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Hooghly",
+    "NUMBER 1": 9765192926,
+    "MOBILE NUMBER 2": 9529094787,
+    "EMAIL ADDRESS": "adityakumarmishra934@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bhingardive Aditya Suresh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9860202386,
+    "MOBILE NUMBER 2": 9158583748,
+    "EMAIL ADDRESS": "9988.bhingardive@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Chaudhari Srushti Manohar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Sambhajinagar",
+    "NUMBER 1": 9881301414,
+    "MOBILE NUMBER 2": 7887758812,
+    "EMAIL ADDRESS": "srushtichaudhari@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Patil Atharva Vijay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Ratnagiri",
+    "NUMBER 1": 9423831741,
+    "MOBILE NUMBER 2": 7775972441,
+    "EMAIL ADDRESS": "patilatharva4304@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Jadhav Ojasvi Nilesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9689431617,
+    "MOBILE NUMBER 2": 8830648621,
+    "EMAIL ADDRESS": "ojasvijadhav452@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Sadgir Akshada Popat",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850507473,
+    "MOBILE NUMBER 2": 8605113707,
+    "EMAIL ADDRESS": "pappusadgir@gamil.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Sanap Abhinav Devanand",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Jalna",
+    "NUMBER 1": 7507919881,
+    "MOBILE NUMBER 2": 8308401811,
+    "EMAIL ADDRESS": "abhinavsanap@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Fulpagare Khushal ganesh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Dhule",
+    "NUMBER 1": 9403640201,
+    "MOBILE NUMBER 2": 7972578246,
+    "EMAIL ADDRESS": "khushalfulpagare19@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Kothule Rushikesh Santosh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9890184446,
+    "MOBILE NUMBER 2": 8830384476,
+    "EMAIL ADDRESS": "rushikeshkothule1@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bhagwat Shrenik Raosaheb",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9890859539,
+    "MOBILE NUMBER 2": 9588421770,
+    "EMAIL ADDRESS": "shrenikbhagwat812@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Shirolkar Arman Narayan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Ratnagiri",
+    "NUMBER 1": 9552512844,
+    "MOBILE NUMBER 2": 7820885005,
+    "EMAIL ADDRESS": "armansidi@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bansode Vijay Ashok",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Indapur",
+    "NUMBER 1": 9284806054,
+    "MOBILE NUMBER 2": 7038481649,
+    "EMAIL ADDRESS": "vijaybansode2747@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Gojare Akhilesh Prakash",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Ratnagiri",
+    "NUMBER 1": 7038181071,
+    "MOBILE NUMBER 2": 8605695430,
+    "EMAIL ADDRESS": "akhileshgojare2005@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Chhabadiya Khushi Amar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Shahada",
+    "NUMBER 1": 8446120094,
+    "MOBILE NUMBER 2": 9404578123,
+    "EMAIL ADDRESS": "amar.chhabdiya78@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Barage Prem Sagar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 9975555567,
+    "MOBILE NUMBER 2": 9130396626,
+    "EMAIL ADDRESS": "prembarage@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Patil Manish Satish",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Pune",
+    "NUMBER 1": 9922910263,
+    "MOBILE NUMBER 2": 7972095077,
+    "EMAIL ADDRESS": "0409manishpatil@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Patil Sanskruti Amar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 7798414444,
+    "MOBILE NUMBER 2": 7385414444,
+    "EMAIL ADDRESS": "sanskrutipatil4444@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bodake Manasi Baburao",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 9923192828,
+    "MOBILE NUMBER 2": 8421393937,
+    "EMAIL ADDRESS": "yashbodake1312@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Raul Anish Archis",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Thane",
+    "NUMBER 1": 9004915017,
+    "MOBILE NUMBER 2": 7499913791,
+    "EMAIL ADDRESS": "anishraul@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Waghmare Srushti Gautam",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8788389449,
+    "MOBILE NUMBER 2": 7020877271,
+    "EMAIL ADDRESS": "srushtiwaghmare761@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Patil Divya Vijaykumar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Kopargaon",
+    "NUMBER 1": 7823871003,
+    "MOBILE NUMBER 2": 9823702398,
+    "EMAIL ADDRESS": "patildivya0719@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Gunjal Pratik sharad",
+    "GENDER": "Male",
+    "UNIVERSITY": "Orenburg State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8698673091,
+    "MOBILE NUMBER 2": 8698673091,
+    "EMAIL ADDRESS": "pratikgunjal222@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bhandure Atharva Valmik",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9422747368,
+    "MOBILE NUMBER 2": 9970019611,
+    "EMAIL ADDRESS": "atharvabhandure@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Singh Gauri Brijmohan",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8857836380,
+    "MOBILE NUMBER 2": 9422671557,
+    "EMAIL ADDRESS": "gaurisingh0027@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Upadhyay Anjali Surendra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Thane",
+    "NUMBER 1": 9594998822,
+    "MOBILE NUMBER 2": 9004400968,
+    "EMAIL ADDRESS": "anjali.u.267@gmailcom",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Kharade Saee Viraj",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Satara",
+    "NUMBER 1": 7020452281,
+    "MOBILE NUMBER 2": 8446381959,
+    "EMAIL ADDRESS": "SaeeKharade1@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Upadhyay Shweta Surendra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Thane",
+    "NUMBER 1": 9372852256,
+    "MOBILE NUMBER 2": 8626025746,
+    "EMAIL ADDRESS": "sweta.ssass.2105@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Attal Aishwaraya Sureshchandra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9422757965,
+    "MOBILE NUMBER 2": 9421600884,
+    "EMAIL ADDRESS": "attalsuresh43@gmaial.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Shinde Siddhesh Hemant",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9158400015,
+    "MOBILE NUMBER 2": 8329662687,
+    "EMAIL ADDRESS": "siddheshshinde3455@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Chulbhare Raj Rahul",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9226792338,
+    "MOBILE NUMBER 2": 9922209988,
+    "EMAIL ADDRESS": "rajj72097@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Adke Mayur Mohan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9823736644,
+    "MOBILE NUMBER 2": 9766995171,
+    "EMAIL ADDRESS": "mayradke085@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Lanjewar Soumya Gajanan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Navi Mumbai",
+    "NUMBER 1": 9699022581,
+    "MOBILE NUMBER 2": 9326940536,
+    "EMAIL ADDRESS": "lsoumya009@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Sahastrabuddhe Sania Chandrakant",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Mumbai",
+    "NUMBER 1": 9004214219,
+    "MOBILE NUMBER 2": 9619581116,
+    "EMAIL ADDRESS": "madhavis192@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Malode Divya Nitin",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Akola",
+    "NUMBER 1": 9822702727,
+    "MOBILE NUMBER 2": 9850171521,
+    "EMAIL ADDRESS": "divyamalode7@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Shaikh Mohammadraja Mujib",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Shrirampur",
+    "NUMBER 1": 8830214065,
+    "MOBILE NUMBER 2": 9011732769,
+    "EMAIL ADDRESS": "mohammadraza982004@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Waghmare Sneha Akash",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 7798920200,
+    "MOBILE NUMBER 2": 9404466525,
+    "EMAIL ADDRESS": "snehaw873@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Kukade Shraddha Sanjay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 8830723181,
+    "MOBILE NUMBER 2": 9359795536,
+    "EMAIL ADDRESS": "shraddhakukade19@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bahilam Darshan Nandkumar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Sakuri",
+    "NUMBER 1": 9850585817,
+    "MOBILE NUMBER 2": 9850366822,
+    "EMAIL ADDRESS": "darshanbahilam@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bahilam Tanmay Nandkumar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Sakuri",
+    "NUMBER 1": 8626025746,
+    "MOBILE NUMBER 2": 9922808276,
+    "EMAIL ADDRESS": "tanmaybahilam9922808276@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Kamod Srishti Rajesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9960826000,
+    "MOBILE NUMBER 2": 9860688480,
+    "EMAIL ADDRESS": "rhkamod@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Mahore Komal Vasanta",
+    "GENDER": "Female",
+    "UNIVERSITY": "Jalal-abad State Univesity",
+    "CITY": "Washim",
+    "NUMBER 1": 7057705825,
+    "MOBILE NUMBER 2": 8626025746,
+    "EMAIL ADDRESS": "mahorekomal70@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Shelar Nachiket Rajendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9881786734,
+    "MOBILE NUMBER 2": 9637259883,
+    "EMAIL ADDRESS": "nachiketshelar24@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Gholap Bramhani Suhas",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Mumbai",
+    "NUMBER 1": 8850358507,
+    "MOBILE NUMBER 2": 8850359985,
+    "EMAIL ADDRESS": "suhasbdg@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bhardwaj Tulsi Devendra",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Hathras",
+    "NUMBER 1": 9017549405,
+    "MOBILE NUMBER 2": 9045135668,
+    "EMAIL ADDRESS": "bhardwajtulsi60@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Wade Pranita Devidas",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Jalna",
+    "NUMBER 1": 9421323673,
+    "MOBILE NUMBER 2": 8669341994,
+    "EMAIL ADDRESS": "pranitawade1806@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Chavan Sakshi Shahuraj",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Osmanabad",
+    "NUMBER 1": 8485051387,
+    "MOBILE NUMBER 2": 9527906884,
+    "EMAIL ADDRESS": "sakshichavan714@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Jadhav Jigisha Sanjay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Thane",
+    "NUMBER 1": 9820179223,
+    "MOBILE NUMBER 2": 9082950277,
+    "EMAIL ADDRESS": "justgorun17@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Rajebhosale Snehal Dattatray",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9423925815,
+    "MOBILE NUMBER 2": 8805286656,
+    "EMAIL ADDRESS": "rajebhosaledattatray@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Raut Ananta Dnyaneshwar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8275268864,
+    "MOBILE NUMBER 2": 7972313852,
+    "EMAIL ADDRESS": "anantaraut2009@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Gotarane Yukranti Vijay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Palghar",
+    "NUMBER 1": 8149709952,
+    "MOBILE NUMBER 2": 9284122846,
+    "EMAIL ADDRESS": "yukrantigotarane2004@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Vaidya Omkar Santosh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9665856078,
+    "MOBILE NUMBER 2": 9022619330,
+    "EMAIL ADDRESS": "sukhsamruddhi2004@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Mahajan Vishwesh Vinod",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Buldhana",
+    "NUMBER 1": 7767927314,
+    "MOBILE NUMBER 2": 7350515464,
+    "EMAIL ADDRESS": "vishweshmahajan4141@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Deshmukh Ashwini Shamrao",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850906537,
+    "MOBILE NUMBER 2": 9975152116,
+    "EMAIL ADDRESS": "deshmukhashwini7887@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Bhosale Samruddhi Vishwas",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850365752,
+    "MOBILE NUMBER 2": 7218055294,
+    "EMAIL ADDRESS": "bhosalesamruddhi26@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Gohil Dharmik Pravin",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Mumbai",
+    "NUMBER 1": 88799100311,
+    "MOBILE NUMBER 2": 7506027599,
+    "EMAIL ADDRESS": "dharmikgohil042@gmail.com",
+    "JOINING YEAR": 2023
+  },
+  {
+    "STUDENT NAME": "Kurhade Sahil Sanjay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 7057183811,
+    "MOBILE NUMBER 2": 9822007375,
+    "EMAIL ADDRESS": "sahilkurhade2005@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Harshal Mahadu Patil",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 7447261338,
+    "MOBILE NUMBER 2": 9921697838,
+    "EMAIL ADDRESS": "harshalpc1338@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Neha Deore Rakesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Yeola",
+    "NUMBER 1": 8329152190,
+    "MOBILE NUMBER 2": 9404582684,
+    "EMAIL ADDRESS": "rakeshdeore1979@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Gavit Pratik Raman",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Dhule",
+    "NUMBER 1": 9422374630,
+    "MOBILE NUMBER 2": 9423219234,
+    "EMAIL ADDRESS": "prateekgavit36@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Helgat Om Ravindra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Jalna",
+    "NUMBER 1": 9422226434,
+    "MOBILE NUMBER 2": 8308175533,
+    "EMAIL ADDRESS": "omrhelgat@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Aher Akshay Ramrao",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9730994818,
+    "MOBILE NUMBER 2": 8805079002,
+    "EMAIL ADDRESS": "aherakshay686@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Lavhat Rohan Bharat",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Shevgaon",
+    "NUMBER 1": 9921058803,
+    "MOBILE NUMBER 2": 8766674830,
+    "EMAIL ADDRESS": "bharatlavhat@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Budhwant Saurabh Sanjiv",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Mantha",
+    "NUMBER 1": 9763063900,
+    "MOBILE NUMBER 2": 95618476187,
+    "EMAIL ADDRESS": "budhwantsaurabh96@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Hyalij Parth Jagdish",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9422875726,
+    "MOBILE NUMBER 2": 7083839738,
+    "EMAIL ADDRESS": "parthhyalij2006@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Jadhav Sumeet Dhanraj",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9822349352,
+    "MOBILE NUMBER 2": 9028534629,
+    "EMAIL ADDRESS": "sumeetj.1506@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Rajole Aditya Bhausaheb",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9822372429,
+    "MOBILE NUMBER 2": 9421413308,
+    "EMAIL ADDRESS": "adityarajole2005@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Gaikwad Aryan Kiran",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8888514166,
+    "MOBILE NUMBER 2": 7391880559,
+    "EMAIL ADDRESS": "aryangaikwad7333@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Pardeshi Tushar Rajendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9921217712,
+    "MOBILE NUMBER 2": 7798263198,
+    "EMAIL ADDRESS": "atulpardeshi712@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Ugale Amar Laxman",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Manmad",
+    "NUMBER 1": 9979824814,
+    "MOBILE NUMBER 2": 9284116179,
+    "EMAIL ADDRESS": "amarugale14@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Patni Ujjwal Bipinkumar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Kopargaon",
+    "NUMBER 1": 9822498042,
+    "MOBILE NUMBER 2": 9767952577,
+    "EMAIL ADDRESS": "ujjwalpatni169@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Mahale Sayali Somnath",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9834372163,
+    "MOBILE NUMBER 2": 8080933703,
+    "EMAIL ADDRESS": "sayalimahale24@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Mohite Deep Santosh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Pimpari chinchwad",
+    "NUMBER 1": 985007910,
+    "MOBILE NUMBER 2": 9075313106,
+    "EMAIL ADDRESS": "mohitedeep72@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Sonwane Piyush Vitthal",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8208407151,
+    "MOBILE NUMBER 2": 9970623697,
+    "EMAIL ADDRESS": "kingpiyush9970@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Yelmame Prajwal Gorakh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Rahata",
+    "NUMBER 1": 9881387669,
+    "MOBILE NUMBER 2": 9146411760,
+    "EMAIL ADDRESS": "prajwalyelmame443@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Sonar Aayush Sanjay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8600355044,
+    "MOBILE NUMBER 2": 7020446023,
+    "EMAIL ADDRESS": "aayushsonar25@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Zolekar Sakshi Sanjay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Akole",
+    "NUMBER 1": 8999283636,
+    "MOBILE NUMBER 2": 7620090065,
+    "EMAIL ADDRESS": "sakshizolekar@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Jadhav Sarvesh Sharad",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8308455501,
+    "MOBILE NUMBER 2": 9689332363,
+    "EMAIL ADDRESS": "sarveshjadhav2018@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Pathan Moinuddin Mansurkhan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 7709224414,
+    "MOBILE NUMBER 2": 7744051228,
+    "EMAIL ADDRESS": "pathanmoinuddin07@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Bhadekar Rohan Anil",
+    "GENDER": "Male",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Sinnar",
+    "NUMBER 1": 8554893738,
+    "MOBILE NUMBER 2": 7776896271,
+    "EMAIL ADDRESS": "rohanbhadekar02@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Boraste Gauri Yogesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9822085544,
+    "MOBILE NUMBER 2": 7620702973,
+    "EMAIL ADDRESS": "gauriboraste27@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Wagh Simran Manoj",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9226999914,
+    "MOBILE NUMBER 2": 9420559877,
+    "EMAIL ADDRESS": "simranwagh2407@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Patil Pratik Ghanshyam",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Mokhada",
+    "NUMBER 1": 9673325864,
+    "MOBILE NUMBER 2": 9209531404,
+    "EMAIL ADDRESS": "pratikpatil19282@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Wable Pooja Badriprasad",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Lasalgaon",
+    "NUMBER 1": 9822291759,
+    "MOBILE NUMBER 2": 7887333630,
+    "EMAIL ADDRESS": "poojawable007@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "SHELKE PRATIKSHA BALASAHEB",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Niphad",
+    "NUMBER 1": 9922801299,
+    "MOBILE NUMBER 2": 8605759211,
+    "EMAIL ADDRESS": "shelkepratiksha89@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Waghmare Yashraj Pravin",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9823469100,
+    "MOBILE NUMBER 2": 9112028300,
+    "EMAIL ADDRESS": "yashrajwaghmare4@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Pingalkar Pranav Hemantkumar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8830498228,
+    "MOBILE NUMBER 2": 9421885897,
+    "EMAIL ADDRESS": "pranavpingalkar084@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Sonawane Pranav Ghanshyam",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Andarsule",
+    "NUMBER 1": 7890242373,
+    "MOBILE NUMBER 2": 9921566941,
+    "EMAIL ADDRESS": "pranavsonawane3177@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Amrutkar Raj Prasad",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Nashik",
+    "NUMBER 1": 7745071237,
+    "MOBILE NUMBER 2": 9403507148,
+    "EMAIL ADDRESS": "rajamrutkar24@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Kachave Vedanti Nitin",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Malegaon",
+    "NUMBER 1": 9511238405,
+    "MOBILE NUMBER 2": 9529385344,
+    "EMAIL ADDRESS": "kachavevedanti@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Gangurde Ghanshyam Mahendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9271571061,
+    "MOBILE NUMBER 2": 9325709421,
+    "EMAIL ADDRESS": "ghanshyamgangurde77@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Dighe Anjali Shivaji",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9859592592,
+    "MOBILE NUMBER 2": 9423474592,
+    "EMAIL ADDRESS": "devd927@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Jamdhade Rushikesh Rajendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9096439367,
+    "MOBILE NUMBER 2": 7030899188,
+    "EMAIL ADDRESS": "rushi138238@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Fatangare Prem Pravin",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9665208171,
+    "MOBILE NUMBER 2": 9822724218,
+    "EMAIL ADDRESS": "premfatangare90@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Sonawane Soham Sanjay",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9822263006,
+    "MOBILE NUMBER 2": 9764034980,
+    "EMAIL ADDRESS": "sohamsonawane04@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Mokhare Vaibhav Tukaram",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Manmad",
+    "NUMBER 1": 9975365981,
+    "MOBILE NUMBER 2": 8177882924,
+    "EMAIL ADDRESS": "vaibhavmokhare08@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Mandavkar Samiksha Pramod",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Yavatmal",
+    "NUMBER 1": 9420048375,
+    "MOBILE NUMBER 2": 7887934575,
+    "EMAIL ADDRESS": "mandavkarsamiksha27@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Jadhav Aarya Chandrashekhar",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850256869,
+    "MOBILE NUMBER 2": 8482865335,
+    "EMAIL ADDRESS": "aaryajadhav585@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Mandavkar Tejaswi Mangesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9594077039,
+    "MOBILE NUMBER 2": 8450919460,
+    "EMAIL ADDRESS": "mandavkartejaswi.01@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Nandre Anushka Dipak",
+    "GENDER": "Female",
+    "UNIVERSITY": "Northern State Medical University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8208321695,
+    "MOBILE NUMBER 2": 9372201937,
+    "EMAIL ADDRESS": "anushka.nandre07@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Supekar  Vishal Asman",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Shevgaon",
+    "NUMBER 1": 9423390993,
+    "MOBILE NUMBER 2": 9763034557,
+    "EMAIL ADDRESS": "vishalsupekar2017@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Chothe Pawan Rajesh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 7588828232,
+    "MOBILE NUMBER 2": 7588828234,
+    "EMAIL ADDRESS": "pawanchothe5@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Bhalerao Sanjukta Anand",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9028645757,
+    "MOBILE NUMBER 2": 8390371440,
+    "EMAIL ADDRESS": "sanjuktabhalerao16@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Dusane Uma Rajesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9767532467,
+    "MOBILE NUMBER 2": 9075647460,
+    "EMAIL ADDRESS": "umadusane625@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Pingle Anuja Sachin",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 8668547876,
+    "MOBILE NUMBER 2": 9325934812,
+    "EMAIL ADDRESS": "pingleanuja22@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Koshire Sharanya Sujit",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9422757565,
+    "MOBILE NUMBER 2": 9226958889,
+    "EMAIL ADDRESS": "skoshire07@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Mali Aakanksha Abhay",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9822967546,
+    "MOBILE NUMBER 2": 8766048903,
+    "EMAIL ADDRESS": "aakankshamali0@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Hemke Rudresh Ramesh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Ghoti",
+    "NUMBER 1": 9822844709,
+    "MOBILE NUMBER 2": 9273317404,
+    "EMAIL ADDRESS": "rudreshhemke03@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Kasbe Pratik Vilas",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9511661423,
+    "MOBILE NUMBER 2": 9309126399,
+    "EMAIL ADDRESS": "kasbepratik111@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Rajput Suraj Mohansing",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Chinchkhed",
+    "NUMBER 1": 7588418842,
+    "MOBILE NUMBER 2": "",
+    "EMAIL ADDRESS": "rajputsuraj2329@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Patil Bhavesh Ishwar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Pachora",
+    "NUMBER 1": 9766441903,
+    "MOBILE NUMBER 2": 7387438554,
+    "EMAIL ADDRESS": "patilbhavesh2706@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Pal Manish Kumar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9890448116,
+    "MOBILE NUMBER 2": 9939849254,
+    "EMAIL ADDRESS": "palm36425@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Shelke Rutuja Ramesh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9011655700,
+    "MOBILE NUMBER 2": 9307218305,
+    "EMAIL ADDRESS": "rutujashelke181220@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Binnar Ganesh karbhari",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Shahapur",
+    "NUMBER 1": 9226117633,
+    "MOBILE NUMBER 2": 9637738936,
+    "EMAIL ADDRESS": "gbinnar0@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Sadgir Gaurav laxman",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Sinnar",
+    "NUMBER 1": 9623646010,
+    "MOBILE NUMBER 2": 8999153743,
+    "EMAIL ADDRESS": "gauravsadgir62@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Sadgir Sagar Dnyandeo",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Akole",
+    "NUMBER 1": 9960593410,
+    "MOBILE NUMBER 2": 9209294420,
+    "EMAIL ADDRESS": "sagarsadgir05@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Khandre Saboori Santosh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9076237393,
+    "MOBILE NUMBER 2": 9762935465,
+    "EMAIL ADDRESS": "saboorikhandre@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Patil Sandip Rajendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Sinnar",
+    "NUMBER 1": 7666519283,
+    "MOBILE NUMBER 2": 7588201591,
+    "EMAIL ADDRESS": "patilsandip5030@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Gorde Tanmay Nilesh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Kopargaon",
+    "NUMBER 1": 9822193183,
+    "MOBILE NUMBER 2": 79720389914,
+    "EMAIL ADDRESS": "tanmaygorde2005@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Desai Prathmesh Santaji",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Kolhapur",
+    "NUMBER 1": 8698063349,
+    "MOBILE NUMBER 2": 8975343349,
+    "EMAIL ADDRESS": "prathmesh.desai8698@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Pathak Tejas Rajendra",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 7588029768,
+    "MOBILE NUMBER 2": "",
+    "EMAIL ADDRESS": "tejasrp2005@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Halkunde Anil Namdeo",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Mumbai",
+    "NUMBER 1": 9322393544,
+    "MOBILE NUMBER 2": 8779338900,
+    "EMAIL ADDRESS": "anilhalkunde980@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Patil Vedant Digambar",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Jalgaon",
+    "NUMBER 1": 9921673981,
+    "MOBILE NUMBER 2": 9921670488,
+    "EMAIL ADDRESS": "vedantpatil2512@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Dawool Akash Chandrakant",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Mumbai",
+    "NUMBER 1": 8369676205,
+    "MOBILE NUMBER 2": 7045525965,
+    "EMAIL ADDRESS": "akashdawool@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Godha Yash Sachin",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Jalna",
+    "NUMBER 1": 8329910655,
+    "MOBILE NUMBER 2": 9765511226,
+    "EMAIL ADDRESS": "yashgodha55@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Kasliwal  Ayush Manoj",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 8237976303,
+    "MOBILE NUMBER 2": 9890526969,
+    "EMAIL ADDRESS": "ayushkasliwal11@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Bhoye Nayan Balkrishna",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Kasa",
+    "NUMBER 1": 9272797040,
+    "MOBILE NUMBER 2": 9923161458,
+    "EMAIL ADDRESS": "bhoyenayan7@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Ankaipagar Maclin Joaquim",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9403521019,
+    "MOBILE NUMBER 2": 9529398114,
+    "EMAIL ADDRESS": "mac.ankaipagar@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Jadhav Bhumika Suresh",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Palghar",
+    "NUMBER 1": 9673196809,
+    "MOBILE NUMBER 2": 9665037472,
+    "EMAIL ADDRESS": "bhumikasjadhav@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Shewale Anushka Bhushan",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 7715027504,
+    "MOBILE NUMBER 2": 7276556237,
+    "EMAIL ADDRESS": "anushka.shewale2006@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Aswale Prasad Santosh",
+    "GENDER": "Male",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Ahmednagar",
+    "NUMBER 1": 9545370211,
+    "MOBILE NUMBER 2": 7558425909,
+    "EMAIL ADDRESS": "santosh.aswale11@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Dadhich Ruchika Jaiprakash",
+    "GENDER": "Female",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9823037087,
+    "MOBILE NUMBER 2": 9420592444,
+    "EMAIL ADDRESS": "ruchikadadhich86@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Dhatrak Prathamesh Anil",
+    "GENDER": "Male",
+    "UNIVERSITY": "Yaroslavl The Wise Novgorod State University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9850399910,
+    "MOBILE NUMBER 2": 9309701132,
+    "EMAIL ADDRESS": "prathameshanildhatrak@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Khairnar Akshada Nitin",
+    "GENDER": "Female",
+    "UNIVERSITY": "Kyrgyz Russia Slavic University",
+    "CITY": "Nashik",
+    "NUMBER 1": 9762160800,
+    "MOBILE NUMBER 2": 8208570463,
+    "EMAIL ADDRESS": "akshadakhairnar61@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Patil Vedant Bhushan",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Satana",
+    "NUMBER 1": 9011108187,
+    "MOBILE NUMBER 2": 9545757795,
+    "EMAIL ADDRESS": "vedantpatil561@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "IshiLokeshDigamber",
+    "GENDER": "Male",
+    "UNIVERSITY": "Osh Medical University (IMU)",
+    "CITY": "Barwani",
+    "NUMBER 1": 8109092474,
+    "MOBILE NUMBER 2": 7470762474,
+    "EMAIL ADDRESS": "lokeshishi.25@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Salve Shweta Rahul",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh Medical University (IMU)",
+    "CITY": "Nagpur",
+    "NUMBER 1": 8446669115,
+    "MOBILE NUMBER 2": 9356080239,
+    "EMAIL ADDRESS": "rahul.salve@gmail.com",
+    "JOINING YEAR": 2024
+  },
+  {
+    "STUDENT NAME": "Bhavana Baliram Ghaytidak",
+    "GENDER": "Female",
+    "UNIVERSITY": "Osh State University (IMF)",
+    "CITY": "Beed",
+    "NUMBER 1": 9921775231,
+    "MOBILE NUMBER 2": "",
+    "EMAIL ADDRESS": "bhavanaghaytidak@gmail.com",
+    "JOINING YEAR": 2024
+  }
+    ];
+
+    const keyFixMap = {
+      "Name": "STUDENT NAME",
+      "Gender": "GENDER",
+      "City": "CITY",
+      "University": "UNIVERSITY",
+      "Year": "JOINING YEAR"
+    };
+
+    const cleanedStudents = students.map(student => {
+      const fixedStudent = {};
+      for (const key in student) {
+        const newKey = keyFixMap[key] || key;
+        fixedStudent[newKey] = student[key];
+      }
+      return fixedStudent;
+    });
+
+    $(document).ready(function () {
+      const table = $('#studentsTable').DataTable({
+        data: cleanedStudents,
+        columns: [
+          { data: 'STUDENT NAME' },
+          { data: 'GENDER' },
+          { data: 'CITY' },
+          { data: 'UNIVERSITY' },
+          { data: 'JOINING YEAR' },
+          { data: 'NUMBER 1' },
+          { data: 'MOBILE NUMBER 2' },
+          { data: 'EMAIL ADDRESS' }
+        ]
+      });
+
+      $('#genderFilter').on('change', function () {
+        table.column(1).search(this.value).draw();
+      });
+      $('#cityFilter').on('change', function () {
+        table.column(2).search(this.value).draw();
+      });
+      $('#universityFilter').on('change', function () {
+        table.column(3).search(this.value).draw();
+      });
+      $('#yearFilter').on('change', function () {
+        table.column(4).search(this.value).draw();
+      });
+
+      function populateSelectOptions(columnIndex, selectId, label = "All") {
+        const uniqueData = table.column(columnIndex).data().unique().sort();
+        const select = $(selectId);
+        select.empty();
+        select.append(`<option value="">${label}</option>`);
+        uniqueData.each(function (d) {
+          if (d) select.append(`<option value="${d}">${d}</option>`);
+        });
+      }
+
+      populateSelectOptions(2, '#cityFilter', 'All Cities');
+      populateSelectOptions(3, '#universityFilter', 'All Universities');
+      
+    });
+    
+  </script>
+</body>
+</html>
