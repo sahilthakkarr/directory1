@@ -38,33 +38,35 @@
  </style>
 </head>
 <body>
- <script>
-  // Redirect if not logged in
-  if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "index.html";
-  }
-
-  // Total session duration: 10 minutes
-  const sessionDuration = 10 * 60 * 1000;
-  const logoutTime = Date.now() + sessionDuration;
-  sessionStorage.setItem("logoutTime", logoutTime);
-
-  const timerElement = document.getElementById("session-timer");
-
-  const countdown = setInterval(() => {
-    const remaining = parseInt(sessionStorage.getItem("logoutTime")) - Date.now();
-
-    if (remaining <= 0) {
-      clearInterval(countdown);
-      localStorage.removeItem("loggedIn");
-      alert("Session expired. Logging out.");
-      window.location.href = "index.html"; // back to login
-    } else {
-      const minutes = Math.floor(remaining / (60 * 1000));
-      const seconds = Math.floor((remaining % (60 * 1000)) / 1000);
-      timerElement.textContent = `Session expires in ${minutes}m ${seconds < 10 ? '0' : ''}${seconds}s`;
+<script>
+  window.onload = function () {
+    // Redirect if not logged in
+    if (localStorage.getItem("loggedIn") !== "true") {
+      window.location.href = "index.html";
     }
-  }, 1000);
+
+    // Total session duration: 10 minutes
+    const sessionDuration = 10 * 60 * 1000;
+    const logoutTime = Date.now() + sessionDuration;
+    sessionStorage.setItem("logoutTime", logoutTime);
+
+    const timerElement = document.getElementById("session-timer");
+
+    const countdown = setInterval(() => {
+      const remaining = parseInt(sessionStorage.getItem("logoutTime")) - Date.now();
+
+      if (remaining <= 0) {
+        clearInterval(countdown);
+        localStorage.removeItem("loggedIn");
+        alert("Session expired. Logging out.");
+        window.location.href = "index.html";
+      } else {
+        const minutes = Math.floor(remaining / (60 * 1000));
+        const seconds = Math.floor((remaining % (60 * 1000)) / 1000);
+        timerElement.textContent = `Session expires in ${minutes}m ${seconds < 10 ? '0' : ''}${seconds}s`;
+      }
+    }, 1000);
+  };
 </script>
 
   <h2>FDES STUDENT DIRECTORY</h2>
