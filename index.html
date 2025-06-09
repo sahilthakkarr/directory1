@@ -2,36 +2,100 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Login</title>
+  <title>Future Doctor | Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial; max-width: 400px; margin: 50px auto; padding: 20px; }
-    input, button { width: 100%; padding: 10px; margin: 8px 0; }
-    button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-    button:hover { background-color: #6b3fa0; }
-    .error { color: red; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f8f9fd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-container img {
+      max-width: 180px;
+      margin-bottom: 20px;
+    }
+
+    .login-container h2 {
+      color: #5e2a84;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #7e42c3;
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #672da6;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <h2>Login</h2>
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button type="submit">Login</button>
-    <p id="error" class="error"></p>
-  </form>
+  <div class="login-container">
+    <img src="logo.png" alt="Future Doctor Logo" />
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <p id="error" class="error"></p>
+    </form>
+  </div>
 
   <script>
-    const USER = "admin";          // Set your username here
-    const PASS = "mypassword";     // Set your password here
+    const USER = "admin";
+    const PASS = "mypassword";
 
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value;
 
-      if(username === USER && password === PASS) {
+      if (username === USER && password === PASS) {
         localStorage.setItem("loggedIn", "true");
-        window.location.href = "future-doctor-student-directory.html"; // Your existing page
+        window.location.href = "future-doctor-student-directory.html";
       } else {
         document.getElementById("error").textContent = "Invalid username or password.";
       }
